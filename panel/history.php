@@ -15,10 +15,6 @@
                 readfile('reuse/banner.html');
             ?>
             <br>
-            <div class="row">
-                <h4 class="text-center">welcome, <?php echo $cdb->GetUsername($_SESSION['userid']); ?></h4>
-            </div>
-            <br>
             <div class="row text-center">
                 <table class="table-bordered table-striped" style="width:100%;">
                     <thead>
