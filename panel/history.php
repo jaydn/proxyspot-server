@@ -23,6 +23,7 @@
                 <table class="table-bordered table-striped" style="width:100%;">
                     <thead>
                         <th>batchcode</th>
+                        <th>size</th>
                         <th>view</th>
                     </thead>
                     <tbody>
@@ -32,6 +33,10 @@
                             foreach($stmt as $row) {
                                 echo '<tr>'."\n";
                                 echo '<td>'.$row['batchcode'].'</td>'."\n";
+                                //TODO: this is pretty filthy lol
+                                $stmt = $cdb->db->prepare('SELECT batchcode FROM proxies WHERE batchcode=?');
+                                $stmt->execute([$row['batchcode']]);
+                                echo '<td>'.$stmt->rowCount().'</td>';
                                 echo '<td><a href="batch.php?b='.$row['batchcode'].'">view</a></td>'."\n";
                                 echo '</tr>'."\n";
                             }
