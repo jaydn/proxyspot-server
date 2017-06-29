@@ -17,9 +17,14 @@
             <div class="row text-center">
                 <p>
                 <?php
-                    echo '<p>'.htmlspecialchars($_GET['b']).'</p>';
                     if(!$cdb->UsedBatchcode($_GET['b'])) {
                         readfile('reuse/bad_batch.html');
+                    }
+                    if($cdb->OwnerOfBatchcode($_GET['b']) == $_SESSION['userid']) {
+                        echo '<p>'.htmlspecialchars($_GET['b']).'</p>';
+                        echo '<a href="publicity.php?b='.htmlspecialchars($_GET['b']).'"><button>';
+                        echo $cdb->IsPublicBatchcode($_GET['b']) ? 'public' : 'private';
+                        echo '</button></a>'."\n";
                     }
                 ?>
                 </p>
@@ -36,15 +41,17 @@
                     <tbody>
                         <?php
                         if($cdb->UsedBatchcode($_GET['b'])) {
-                            $stmt = $cdb->db->prepare('SELECT * FROM proxies WHERE batchcode=?');
-                            $stmt->execute([$_GET['b']]);
-                            foreach($stmt as $row) {
-                                echo '<tr>'."\n";
-                                echo '<td>'.$row['entryip'].'</td>'."\n";
-                                echo '<td>'.$row['entryport'].'</td>'."\n";
-                                echo '<td>'.$row['entrytype'].'</td>'."\n";
-                                echo '<td>'.$row['exitip'].'</td>'."\n";
-                                echo '</tr>'."\n";
+                            if($cdb->IsPublicBatchcode($_GET['b']) || $cdb->OwnerOfBatchcode($_GET['b']) == $_SESSION['userid']) {
+                                $stmt = $cdb->db->prepare('SELECT * FROM proxies WHERE batchcode=?');
+                                $stmt->execute([$_GET['b']]);
+                                foreach($stmt as $row) {
+                                    echo '<tr>'."\n";
+                                    echo '<td>'.$row['entryip'].'</td>'."\n";
+                                    echo '<td>'.$row['entryport'].'</td>'."\n";
+                                    echo '<td>'.$row['entrytype'].'</td>'."\n";
+                                    echo '<td>'.$row['exitip'].'</td>'."\n";
+                                    echo '</tr>'."\n";
+                                }
                             }
                         }
                         ?>

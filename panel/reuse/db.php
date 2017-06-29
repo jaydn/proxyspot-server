@@ -23,6 +23,22 @@ class CPerusalDb {
         return $stmt->rowCount() != 0;
     }
 
+    function IsPublicBatchcode($batchcode) {
+        $stmt = $this->db->prepare('SELECT public FROM batches WHERE batchcode=?');
+        $stmt->execute([$batchcode]);
+        return $stmt->fetch()['public'];
+    }
+
+    function TogglePublicity($batchcode) {
+        return $this->db->prepare('UPDATE batches SET public = !public WHERE batchcode=?')->execute([$batchcode]);
+    }
+
+    function OwnerOfBatchcode($batchcode) {
+        $stmt = $this->db->prepare('SELECT userid FROM batches WHERE batchcode=?');
+        $stmt->execute([$batchcode]);
+        return $stmt->fetch()['userid'];
+    }
+
     function GetUsername($userid) {
         $stmt = $this->db->prepare('SELECT username FROM users WHERE userid=?');
         $stmt->execute([$userid]);
