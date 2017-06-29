@@ -17,11 +17,13 @@
             <div class="row text-center">
                 <p>
                 <?php
-                    if(!$cdb->UsedBatchcode($_GET['b'])) {
+                    $yourbatch = $cdb->OwnerOfBatchcode($_GET['b']) == $_SESSION['userid'];
+                    $public = $cdb->IsPublicBatchcode($_GET['b']);
+                    if(!$cdb->UsedBatchcode($_GET['b']) || !($yourbatch || $public)) {
                         readfile('reuse/bad_batch.html');
                     }
+                    echo '<p>'.htmlspecialchars($_GET['b']).'</p>';
                     if($cdb->OwnerOfBatchcode($_GET['b']) == $_SESSION['userid']) {
-                        echo '<p>'.htmlspecialchars($_GET['b']).'</p>';
                         echo '<a href="publicity.php?b='.htmlspecialchars($_GET['b']).'"><button>';
                         echo $cdb->IsPublicBatchcode($_GET['b']) ? 'public' : 'private';
                         echo '</button></a>'."\n";
