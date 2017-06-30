@@ -46,7 +46,7 @@ class CPerusalDb {
     }
     
     function AddBatchcode($batchcode, $userid) {
-        $this->db->prepare('INSERT INTO batches(batchcode, userid) VALUES (?, ?)')->execute([$batchcode, $userid]);
+        $this->db->prepare('INSERT INTO batches(batchcode, userid, public) VALUES (?, ?, 0)')->execute([$batchcode, $userid]);
     }
 }
 
