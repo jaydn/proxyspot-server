@@ -9,7 +9,7 @@
             require_once('db.php');
             $user = null;
             try {
-                $stmt = $cdb->db->prepare('SELECT userid,hashedpw,salt FROM users WHERE username=?');
+                $stmt = $cdb->db->prepare('SELECT userid,hashedpw FROM users WHERE username=?');
                 $stmt->execute([$username,]);
                 $user = $stmt->fetch();
             }catch(PDOException $e){
@@ -18,7 +18,7 @@
             if($user == null) { 
                 return 1;
             }
-            if(!strcmp($user["hashedpw"], md5($password . $user["salt"]))) {
+            if(password_verify($password, $user['hashedpw'])) {
                 $_SESSION['userid'] = $user['userid'];
                 return 0;
             }

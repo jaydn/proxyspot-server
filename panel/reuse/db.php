@@ -17,10 +17,23 @@ class CPerusalDb {
         $this->db = new PDO($dsn, PERUSAL_MYSQL_USER, PERUSAL_MYSQL_PASS, $opt);
     }
 
+
+    
+    function AddBatchcode($batchcode, $userid) {
+        $this->db->prepare('INSERT INTO batches(batchcode, userid, public) VALUES (?, ?, 0)')->execute([$batchcode, $userid]);
+    }
+
     function UsedBatchcode($batchcode) {
         $stmt = $this->db->prepare('SELECT userid FROM batches WHERE batchcode=?');
         $stmt->execute([$batchcode]);
         return $stmt->rowCount() != 0;
+    }
+    
+
+    function OwnerOfBatchcode($batchcode) {
+        $stmt = $this->db->prepare('SELECT userid FROM batches WHERE batchcode=?');
+        $stmt->execute([$batchcode]);
+        return $stmt->fetch()['userid'];
     }
 
     function IsPublicBatchcode($batchcode) {
@@ -33,20 +46,10 @@ class CPerusalDb {
         return $this->db->prepare('UPDATE batches SET public = !public WHERE batchcode=?')->execute([$batchcode]);
     }
 
-    function OwnerOfBatchcode($batchcode) {
-        $stmt = $this->db->prepare('SELECT userid FROM batches WHERE batchcode=?');
-        $stmt->execute([$batchcode]);
-        return $stmt->fetch()['userid'];
-    }
-
     function GetUsername($userid) {
         $stmt = $this->db->prepare('SELECT username FROM users WHERE userid=?');
         $stmt->execute([$userid]);
         return $stmt->fetch()["username"];
-    }
-    
-    function AddBatchcode($batchcode, $userid) {
-        $this->db->prepare('INSERT INTO batches(batchcode, userid, public) VALUES (?, ?, 0)')->execute([$batchcode, $userid]);
     }
 }
 
