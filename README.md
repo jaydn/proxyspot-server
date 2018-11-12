@@ -13,4 +13,3 @@ no insane dependencies. should run on vanilla php with the pdo thing.
 
 ## i'm pretty bad at php
 if things are broken i wouldn't be surprised.
-the password hashing is barely safe, and certainly would not hold up to an attacker.
