@@ -1,14 +1,30 @@
-{% for error in errors %}
-<div class="alert alert-danger">{{error}}</div>
-{% endfor %}
-<form method="post">
-    <div class="form-group">
-        <label for="u">username</label>
-        <input type="usern" id="u" name="u" class="form-control">
-    </div>
-    <div class="form-group">
-        <label for="p">password</label>
-        <input type="password" id="p" name="p" class="form-control">
-    </div>
-    <button type="submit" class="btn btn-primary">submit</button>
-</form>
+{% extends "base.html" %}
+
+{% block body %}
+<body>
+	<div class="container">
+
+		{% include "banner.html" %}
+
+		<br>
+		<div class="row">
+			<div class="jumbotron">
+				{% for error in errors %}
+					<div class="alert alert-danger">{{error}}</div>
+				{% endfor %}
+				<form method="post">
+					<div class="form-group">
+						<label for="u">username</label>
+						<input type="usern" id="u" name="u" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="p">password</label>
+						<input type="password" id="p" name="p" class="form-control">
+					</div>
+					<button type="submit" class="btn btn-primary">submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+{% endblock %}
