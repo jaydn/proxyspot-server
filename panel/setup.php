@@ -9,8 +9,11 @@
         echo 'Error creating primary key probably already exists';
         echo $e->getMessage();
     }
-
-    $hashedpw = password_hash($_GET['p'], PASSWORD_DEFAULT);
-    $stmt = $cdb->db->prepare('INSERT INTO users(username,hashedpw) VALUES (?,?)');
-    $stmt->execute([$_GET['u'], $hashedpw]);
+    if(!$cdb->HasUser()) {
+        $hashedpw = password_hash($_GET['p'], PASSWORD_DEFAULT);
+        $stmt = $cdb->db->prepare('INSERT INTO users(username,hashedpw) VALUES (?,?)');
+        $stmt->execute([$_GET['u'], $hashedpw]);
+    } else {
+        echo 'Admin user already exists';
+    }
 ?>

@@ -51,6 +51,12 @@ class CPerusalDb {
         $stmt->execute([$userid]);
         return $stmt->fetch()["username"];
     }
+
+    function HasUser() {
+        $stmt = $this->db->prepare('SELECT * FROM users');
+        $stmt->execute();
+        return $stmt->rowCount() != 0;
+    }
 }
 
 $cdb = new CPerusalDb();
