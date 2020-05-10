@@ -1,45 +1,23 @@
 <?php
-    require_once('reuse/security.php');
-    require_once('reuse/perusal_sesh.php');
-    require_once('reuse/db.php');
+require_once('reuse/security.php');
+require_once('reuse/perusal_sesh.php');
+require_once('reuse/db.php');
 ?>
-<!DOCTYPE html>
-<html lang="en">
-    <?php
-        readfile('reuse/head.html');
-    ?>
-    
-    <body>
-        <div class="container">
-            <?php
-                readfile('reuse/banner.html');
-            ?>
-            <br>
-            <div class="row text-center">
-                <table class="table-bordered table-striped" style="width:100%;">
-                    <thead>
-                        <th>batchcode</th>
-                        <th>size</th>
-                        <th>view</th>
-                    </thead>
-                    <tbody>
-                        <?php
-                            $stmt = $cdb->db->prepare('SELECT batchcode FROM batches WHERE userid=?');
-                            $stmt->execute([$_SESSION['userid']]);
-                            foreach($stmt as $row) {
-                                echo '<tr>'."\n";
-                                echo '<td>'.$row['batchcode'].'</td>'."\n";
-                                //TODO: this is pretty filthy lol
-                                $stmt = $cdb->db->prepare('SELECT batchcode FROM proxies WHERE batchcode=?');
-                                $stmt->execute([$row['batchcode']]);
-                                echo '<td>'.$stmt->rowCount().'</td>';
-                                echo '<td><a href="batch.php?b='.$row['batchcode'].'">view</a></td>'."\n";
-                                echo '</tr>'."\n";
-                            }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-   </body>
-</html>
+<?php
+$stmt = $cdb->db->prepare('SELECT batchcode FROM batches WHERE userid=?');
+$stmt->execute([$_SESSION['userid']]);
+
+$batches = [];
+
+foreach ($stmt as $row) {
+    $batch = $row['batchcode'];
+    //TODO: this is pretty filthy lol
+    //TODO: 3 years later and this is still pretty filthy
+    $stmt = $cdb->db->prepare('SELECT batchcode FROM proxies WHERE batchcode=?');
+    $stmt->execute([$batch]);
+    $size = $stmt->rowCount();
+    array_push($batches, ["code" => $batch, "size" => $size]);
+}
+
+echo $twig->render("history.html", ["batches" => $batches]);
+?>

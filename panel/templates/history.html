@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block body %}
+	<body>
+		<div class="container">
+			{% include "banner.html" %}
+			<br>
+			<div class="row text-center">
+				<table class="table-bordered table-striped" style="width:100%;">
+					<thead>
+						<th>batchcode</th>
+						<th>size</th>
+						<th>view</th>
+					</thead>
+					<tbody>
+                    {% for batch in batches %}
+                        <tr>
+                            <td>{{batch.code}}</td>
+                            <td>{{batch.size}}</td>
+                            <td><a href="batch.php?b={{batch.code}}">view</a></td>
+                        </tr>
+                    {% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</body>
+{% endblock %}
