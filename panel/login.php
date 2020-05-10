@@ -24,18 +24,17 @@ readfile('reuse/head.html');
                 if ($login->IsLoginAttempt()) {
                     switch ($login->Login($_POST['u'], $_POST['p'])) {
                         case 0:
-                            readfile('reuse/login_form/valid_login.html');
+                            echo $twig->render('login.html');
                             break;
                         case 1:
-                            readfile('reuse/login_form/bad_password.html');
-                            readfile('reuse/login_form/login_form.html');
+                            echo $twig->render('login.html', ['errors' => ['Username or password invalid.']]);
                             break;
-                        default:
-                            readfile('reuse/login_form/unk_error.html');
+                        case 2:
+                            echo $twig->render('login.html', ['errors' => ['An unknown error has occurred.']]);
                             break;
                     }
                 } else {
-                    echo $twig->render('test.html', ['name' => 'Fabien']);
+                    echo $twig->render('login.html');
                 }
                 ?>
             </div>
