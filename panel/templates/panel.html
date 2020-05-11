@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 {% block body %}
     <body>
+        {% include "banner.html" %}
         <div class="container">
-            {% include "banner.html" %}
             <br>
             <div class="row">
                 <h4 class="text-center">welcome, {{username}}</h4>
             </div>
             <br>
             <div class="row text-center">
-                <div class="col-xs-12 col-sm-4">
+                <div class="col s12 m4">
                     <a href="newbatch.php"><button class="btn btn-primary">Create Batch</button></a>
                 </div>
-                <div class="col-xs-12 col-sm-4">
+                <div class="col s12 m4">
                     <a href="history.php"><button class="btn btn-primary">View History</button></a>
                 </div>
-                <div class="col-xs-12 col-sm-4">
+                <div class="col s12 m4">
                     <a href="logout.php"><button class="btn btn-primary">Log Out</button></a>
                 </div>
             </div>

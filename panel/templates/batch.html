@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 {% block body %}
 	<body>
+		{% include "banner.html" %}
 		<div class="container">
-			{% include "banner.html" %}
 			<div class="row text-center">
 				<p>{{batchcode}}</p>
 				{% if owner %}
-					<a href="publicity.php?b={{batchcode}}">
-						<button>{{publicState}}</button>
-					</a>
+					<a class="waves-effect waves-light btn" href="publicity.php?b={{batchcode}}">{{publicState}}</a>
 				{% endif %}
-				<p><a href="raw.php?b={{batchcode}}">raw</a></p>
+				<p>
+					<a href="raw.php?b={{batchcode}}">raw</a>
+				</p>
 			</p>
 		</div>
 		<br>

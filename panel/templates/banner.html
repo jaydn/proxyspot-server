@@ -1,5 +1,30 @@
-<div class="row">
+{#<div class="row">
     <div>
         <a href="panel.php"><h1 class="text-center">proxyspot</h1></a>
     </div>
-</div>
+</div>#}
+
+<nav>
+	<div class="container">
+		<div class="nav-wrapper">
+			<a href="." class="brand-logo">proxyspot</a>
+			<a href="#" data-target="mobile-demo" class="sidenav-trigger">
+				<i class="material-icons">menu</i>
+			</a>
+			<ul class="right hide-on-med-and-down">
+				{% include "navitems.html" %}
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<ul class="sidenav" id="mobile-demo">
+	{% include "navitems.html" %}
+</ul>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+var elems = document.querySelectorAll('.sidenav');
+var instances = M.Sidenav.init(elems);
+});
+</script>
