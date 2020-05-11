@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block body %}
+	<body>
+		<div class="container">
+			{% include "banner.html" %}
+			<div class="row text-center">
+				<p>{{batchcode}}</p>
+				{% if owner %}
+					<a href="publicity.php?b={{batchcode}}">
+						<button>{{publicState}}</button>
+					</a>
+				{% endif %}
+			</p>
+		</div>
+		<br>
+		<div class="row text-center">
+			<table style="width:100%" class="table-bordered table-striped">
+				<thead>
+					<th>entry</th>
+					<th>port</th>
+					<th>type</th>
+					<th>exit</th>
+				</thead>
+				<tbody>
+					{% for row in proxies %}
+						<tr>
+							<td>{{row.entryip}}</td>
+							<td>{{row.entryport}}</td>
+							<td>{{row.entrytype}}</td>
+							<td>{{row.exitip}}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</body>
+</div></body></html>{% endblock %}
