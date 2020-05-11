@@ -5,7 +5,7 @@
     $userid = $_SESSION['userid'];
 
     do {
-        $batchcode = uniqid();
+        $batchcode = uniqid('', true);
     } while($cdb->UsedBatchcode($batchcode));
 
     $cdb->AddBatchcode($batchcode, $userid);
