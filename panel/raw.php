@@ -17,10 +17,12 @@
 
     if($used) {
         if($public || $owner) {
+            header('Content-Type:text/plain');
             $stmt = $cdb->db->prepare('SELECT * FROM proxies WHERE batchcode=?');
             $stmt->execute([$batchcode]);
             foreach($stmt as $row) {
-                echo $row['entryip'].':'.$row['entryport'];
+                //echo $row['entryip'].':'.$row['entryport'];
+                echo "{$row['entryip']}:{$row['entryport']}:{$row['entrytype']}\n";
             }
         }
     }
